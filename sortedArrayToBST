@@ -1,1 +1,46 @@
-Covert sorted list or array to BST
+# Covert sorted list or array to BST in Python
+# First, put sorted linked list element in an array
+# Second, convert array into BST. Here we set mid point of array as root, use elements before midpoint as left subtree 
+  and elements after midpoint as right subtree. and recursively do this.
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    
+    def sortedArrayToBST(self, array):
+        n = len(array)
+        if n == 0:
+            return None
+        if n == 1:
+            return TreeNode(array[0])
+        root = TreeNode(array[n/2])
+        root.left = sortedArrayToBST(array[0 : array[n/2]])
+        root.right = sortedArrayToBST(array[array[n/2 + 1] : n])
+        return root
+    
+    def sortedListToBST(self, head):
+        """
+        :type head: ListNode
+        :rtype: TreeNode
+        """
+        array = []
+        p = head
+        while p:
+            array.append(p.val)
+            p = p.next
+        return sortedArrayToBST(array)
+        
+        
+    
+        
