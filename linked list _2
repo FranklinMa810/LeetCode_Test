@@ -1,0 +1,26 @@
+# merged two sort linked list
+# NOTE: the 2 linked list has already been sorted, otherwise you need to sort 2 list first and then run the function
+
+def mergeTwoSortedList(self, l1, l2):
+    """
+    Input
+    =============
+    l1: sorted linked list
+    l2: sorted linked list
+    """
+    
+    dummy = ListNode(0)
+    temp = dummy
+    
+    if l1 != None:
+        temp.next = l1
+    if l2 != None:
+        temp.next = l2
+    while l1 != None and l2 != None:
+        if l1.val < l2.val:
+            temp.next = l1
+            l1 = l1.next
+        else:
+            temp.next = l2
+            l2 = l2.next
+    return dummy.next
