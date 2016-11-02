@@ -1,0 +1,3 @@
+Recursive or While-Loop?    
+ans:While-Loop    
+Recursive way will lead to stack overflow. Every process in Linux is allocated 8 MB space, which is limited. 
