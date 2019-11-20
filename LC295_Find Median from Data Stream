@@ -1,0 +1,40 @@
+class MedianFinder {
+// for n nums from Data Stream, time complexity is O(nlogn), additional space complexity O(n) for 2 heaps.
+private:
+    priority_queue<int, vector<int>, greater<int>> r_;    // min heap - right part, to find the min of the larger group
+    priority_queue<int, vector<int>, less<int>> l_;    // max heap - left part - to find the max of the smaller group
+    // use push(), top() and pop() to add, return max/min and delete
+public:
+    /** initialize your data structure here. */
+    MedianFinder() {}    // default constructor
+    
+    void addNum(int num) {
+        if(l_.empty() || num <= l_.top())
+            l_.push(num);
+        else
+            r_.push(num);    // add/delete time complexity O(logn) for heap
+        // balance the size of left and right to make sure 0<=(left size - right size)<=1
+        if(l_.size() < r_.size()){
+            l_.push(r_.top());
+            r_.pop();
+        }
+        else if(l_.size() - r_.size() > 1){
+            r_.push(l_.top());    // add time complexity O(logn)
+            l_.pop();    // delete time complexity O(logn)
+        }
+    }
+    
+    double findMedian() {
+        if(l_.size() > r_.size())
+            return l_.top() * 1.0;
+        else
+            return (l_.top() + r_.top()) / 2.0;
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
