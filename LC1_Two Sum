@@ -1,1 +1,17 @@
-
+class Solution{
+public: 
+    vector<int> twoSum(const vector<int>& nums, int target){
+        if(nums.empty() || nums.size() == 1)
+            return {};
+        unordered_map<int, int> idx;
+        for (int i = 0; i < nums.size(); i++){
+            idx[nums[i]] = i;
+        }
+        for (int i = 0; i < nums.size(); i++){
+            int num_left = target - nums[i];
+            if (idx.count(num_left) == 1 && idx[num_left] != i)    // cannot use the itself
+                return {i, idx[num_left]};
+        }
+        return {};
+    }
+};    // Time complexity: O(n); Additional Space complexity: O(n)
