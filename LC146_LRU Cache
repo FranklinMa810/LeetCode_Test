@@ -1,0 +1,44 @@
+class LRUCache {
+private:
+    int capacity_m;
+    list<pair<int, int>> cache_m;
+    unordered_map<int, list<pair<int, int>>::iterator> map_m;
+public:
+    LRUCache(int capacity) {
+        capacity_m = capacity;    // constructor
+    }
+    
+    int get(int key) {
+        const auto it = map_m.find(key);
+        if (it == map_m.cend())    // check if <key,value> is in map. Time complexity O(1)
+            return -1;
+        cache_m.splice(cache_m.begin(), cache_m, it->second);    // it->second: pair <key, value>;
+        return it->second->second;    // return value of the corresponding key;
+    }
+    
+    void put(int key, int value) {
+        // If <key,value> exists, update the value and put new pair in front of list
+        const auto it = map_m.find(key);
+        if(it != map_m.cend()){
+            it->second->second = value;
+            cache_m.splice(cache_m.begin(), cache_m, it->second);
+            return;
+        }
+        // If the capcity is full, remove the pair in both list cache_m and map_p
+        // Note: no need to add new pair since either capacity is full or not, we need to add new pair in front
+        if(cache_m.size() >= capacity_m){
+            const auto& least_recent_pair = cache_m.back();    // list.back() return a reference
+            map_m.erase(least_recent_pair.first);    // if reference, use "." to access the element of pair
+            cache_m.pop_back();
+        }
+        cache_m.emplace_front(key, value);
+        map_m[key] = cache_m.begin();    // value in map is a iterator
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
