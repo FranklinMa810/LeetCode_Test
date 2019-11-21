@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if (height.empty())
+            return 0;
+        // //if does not use STL, this will lower the speed. 
+        // int max_height = height[0], max_idx = 0;
+        // for (int i = 0; i < height.size(); i++){
+        //     if (height[i] > max_height){
+        //         max_height = height[i];
+        //         max_idx = i;
+        //     }
+        // } 
+        
+        int max_idx = std::distance(height.begin(), std::max_element(height.begin(), height.end()));
+        // max_element returns an iterator
+        // calculate the water volume for heigh[1:max_idx]
+        int sum = 0;
+        auto left = height.front();
+        for (int i = 1; i < max_idx; i++){
+            if (height[i] > left)
+                left = height[i];
+            if (height[i] < left)
+                sum += left - height[i];
+            else
+                continue;
+        }
+        // calculate the water volume for heigh[max_idx+1:height.size()-1]
+        auto right = height.back();
+        for (int i = height.size()-1; i > max_idx; i--){
+            if (height[i] > right)
+                right = height[i];
+            if (height[i] < right)
+                sum += right - height[i];
+            else
+                continue;
+        }
+        return sum;
+    }
+};
