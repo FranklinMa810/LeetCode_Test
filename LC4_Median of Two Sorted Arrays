@@ -1,0 +1,38 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        const int n1 = nums1.size();
+        const int n2 = nums2.size();
+        if (n1 > n2)
+            return findMedianSortedArrays(nums2, nums1);
+        const int k = (n1 + n2 + 1) / 2;    // numbers of number in merge array from first element to left median/median
+        int l = 0, r = n1;
+        while (l < r){
+            int m1 = l + (r - l)/2;
+            int m2 = k - m1;    // nums2 need m2 numbers to for a k numbers first half of the merged array
+            if (nums1[m1] < nums2[m2-1])
+                l = m1+1;
+            else 
+                r = m1;
+        }
+        const int m1 = l;
+        const int m2 = k - m1;    // no need to change m1 and m2 so set to const.
+        // mean or left mean when n1+n2 is even
+        int c1, c2;    // c1 is the left mean and c2 is right mean. 
+        if (m1 <= 0)
+            c1 = nums2[m2-1];
+        if (m2 <= 0)
+            c1 = nums1[m1-1];
+        else
+            c1 = max(nums1[m1-1],nums2[m2-1]);    
+        // right mean needed when n1+n2 is even
+        if (m1 >= n1)
+            c2 = nums2[m2];
+        if (m2 >= n2)
+            c2 = nums1[m1];
+        else 
+            c2 = min(nums1[m1],nums2[m2]);
+        // return mean
+        return ((n1+n2) % 2 == 0? (c1 + c2) * 0.5 : c1);
+    }
+};
