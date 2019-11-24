@@ -1,0 +1,43 @@
+class Solution{
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix){
+        // corner case
+        if (matrix.empty()) return {};
+        int left = 0, top = 0;
+        int right = matrix[0].size(), bottom = matrix.size();
+        int dir = 0;    // dir 0: move right, 1: move down, 2: move left, 3: move up
+        int y = 0, x = 0;    //initial location
+        vector<int> ans;
+        const int total = right * bottom;
+        while(ans.size() < total - 1){
+            if(dir == 0){
+                // move right
+                while (x < right - 1)
+                    ans.push_back(matrix[y][x++]);
+                ++top;
+            }    
+            else if(dir == 1){
+                // move down
+                while (y < bottom - 1)
+                    ans.push_back(matrix[y++][x]);
+                --right;
+            }    
+            else if(dir == 2){
+                // move left
+                while (x > left)
+                    ans.push_back(matrix[y][x--]);
+                --bottom;
+            }    
+            else if(dir == 3){
+                // move up
+                while (y > top)
+                    ans.push_back(matrix[y--][x]);
+                    ++left;
+            }    
+            dir = (dir + 1) % 4;
+        }
+        if(ans.size() !=  total)
+            ans.push_back(matrix[y][x]);
+        return ans;
+    }
+};
