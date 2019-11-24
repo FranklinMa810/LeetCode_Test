@@ -1,0 +1,18 @@
+class Solution{
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs){
+        vector<vector<string>> ans;
+        unordered_map<string, vector<int>> map;    // key is the sorted string, value is the indexES of sorted string
+        for (int i = 0; i < strs.size(); i++){    // O(n)
+            string s = strs[i];
+            std::sort(s.begin(), s.end());    // O(logh), h is the lenth of each string
+            map[s].push_back(i);
+        }
+        for (auto pair : map){
+            ans.push_back({});
+            for (int idx : pair.second)
+                ans.back().push_back(strs[idx]);
+        }    // O(n)
+        return ans;
+    }
+};
