@@ -1,0 +1,16 @@
+class Solution{
+public:
+    int maxProfit(vector<int>& prices){
+        // corner case
+        if (prices.empty()) return 0;
+        int profit = 0;
+        int max_profit = 0;
+        int min_price_sofar = prices[0];
+        for (int price : prices){
+            profit = price - min_price_sofar;
+            max_profit = max(max_profit, profit);
+            min_price_sofar = min(min_price_sofar, price);
+        }
+        return max_profit;
+    }
+};
