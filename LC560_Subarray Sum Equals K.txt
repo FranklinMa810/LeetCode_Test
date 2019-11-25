@@ -1,0 +1,18 @@
+class Solution{
+public:
+    int subarraySum(vector<int>& nums, int k){
+        // prefix nums, calculate sum[0:i], and check the number of prefix sum[0:j](j < i) = sum[0:i] - k
+        // the number of prefix sum is the number of sum[j:i] that equal to k
+        //corner case
+        if(nums.empty()) return 0;
+        int ans = 0;
+        unordered_map<int, int> prefix_sum_count_map = {{0,1}};    // NOTE to initialize
+        int prefix_sum = 0;
+        for(int i = 0; i < nums.size(); ++i){
+            prefix_sum += nums[i];
+            ans += prefix_sum_count_map[prefix_sum - k];
+            ++prefix_sum_count_map[prefix_sum];
+        }
+        return ans;
+    }
+};    // Time complexity O(n), unordered_map access/add time complexity O(1)

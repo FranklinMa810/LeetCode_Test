@@ -1,0 +1,11 @@
+class Solution{
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n){
+        int nums1Tail = m - 1;
+        int nums2Tail = n - 1;
+        int mergeTail = m + n - 1;
+        while (nums2Tail >= 0){
+            nums1[mergeTail--] = (nums1Tail >= 0 && nums1[nums1Tail] > nums2[nums2Tail])? nums1[nums1Tail--] : nums2[nums2Tail--];
+        }
+    }
+};
