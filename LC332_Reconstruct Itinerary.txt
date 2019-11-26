@@ -1,0 +1,30 @@
+class Solution {
+private:
+    unordered_map<string, deque<string>> trips_;    
+    vector<string> route_;
+    
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        trips_.clear();
+        route_.clear();
+        for (auto ticket : tickets)
+            trips_[ticket.front()].push_back(ticket.back());
+        for (auto& pair : trips_){
+            auto& dest = pair.second;
+            std::sort(dest.begin(), dest.end());
+        }
+        const string start_point = "JFK";
+        PostOrder(start_point);
+        return vector<string> (route_.crbegin(), route_.crend());
+    }
+    
+    void PostOrder(const string& source){
+        auto& dests = trips_[source];
+        while(!dests.empty()){
+            string dest = dests.front();
+            dests.pop_front();
+            PostOrder(dest);
+        }
+        route_.push_back(source);
+    }
+};
