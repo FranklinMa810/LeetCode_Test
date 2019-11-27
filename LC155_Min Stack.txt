@@ -1,0 +1,36 @@
+class MinStack {
+private:
+    stack<int> allStack;    // stack to store all elementes
+    stack<int> minStack;    // stack to put the minimum so far on top
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+        
+    }
+    
+    void push(int x) {
+        if(allStack.empty()){
+            allStack.push(x);
+            minStack.push(x);
+        }
+        else{
+            allStack.push(x);
+            if (x <= minStack.top())
+                minStack.push(x);
+        }
+    }
+    
+    void pop() {
+        if (allStack.top() == minStack.top())
+            minStack.pop();
+        allStack.pop();
+    }
+    
+    int top() {
+        return allStack.top();
+    }
+    
+    int getMin() {
+        return minStack.top();
+    }
+};
