@@ -1,0 +1,24 @@
+class Solution{
+public:
+    int coinChange(vector<int>& coins, int amount){
+        // step 1: sort the coins, use from the largest to smallest
+        // step 2: dfs and stop if 1) current solution is larger than ans 2) there is no solution
+        // Time complexity: O(nlogn) + O(amount * n/(coin0 * coin1 * ....* coin(n-1)))
+        std::sort(coins.rbegin(), coins.rend());    // step 1
+        int ans = INT_MAX;
+        dfs_coinChange(coins, 0, amount, 0, ans);
+        return ans == INT_MAX? -1 : ans;
+    }
+    void dfs_coinChange(vector<int>& coins, int idx, int amount, int count, int& ans){
+        if(amount == 0){
+            ans = min(ans, count);
+            return;
+        }
+        
+        if (idx == coins.size()) return;
+        
+        const int coin = coins[idx];
+        for(int k = amount/ coin; k >= 0 && count + k < ans; k --)
+            dfs_coinChange(coins, idx + 1, amount - k * coin, count + k, ans);
+    }
+};
