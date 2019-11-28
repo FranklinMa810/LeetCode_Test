@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        // this solution use the function for string: 
+        // 1. isalnum() return true if the char is numeric or letters.
+        // 2. tolower() return the lower case of a given char.
+        // time complexity O(n), additional space complexity O(1).
+        if(s.empty())
+            return true;
+        int i = 0, j = s.size() - 1;
+        while(i < j){
+            while(i < j && !isalnum(s[i]) )
+                ++i;
+            while(i < j && !isalnum(s[j]) )
+                --j;
+            if ( tolower(s[i]) != tolower(s[j]) )
+                return false;
+            else
+                ++i, --j;
+        }
+        return true;
+    }
+};
