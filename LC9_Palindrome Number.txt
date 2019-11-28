@@ -1,0 +1,25 @@
+// This is a boring problem. makes no sense.
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x < 0)
+            return false;
+        if (x == 0)
+            return true;
+        // // Approach 1: reverse x to string
+        // string s = to_string(x);
+        // return s == string(s.rbegin(), s.rend());\
+        // Approach 2: math method
+        int num_digit = static_cast<int>(log10(x) + 1);
+        int t = pow(10, num_digit - 1);
+        for (int i = 0; i < num_digit/2; i++){
+            if(x/t != x%10)
+                return false;
+            else{
+                x = (x - (x/t) * t)/10;
+                t = t/100;
+            }
+        }
+        return true;
+    }
+};
