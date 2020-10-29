@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+int FirstUniqChar(const string &s){
+    if (s.length() == 0)
+        return -1;    //corner case when string is empty itself
+    unordered_map<char, int> char_count_map;    // key is char in string, value is the count
+    for (char c : s)
+        char_count_map[c]++;
+    for (int i = 0; i < s.length(); ++i){
+        if (char_count_map[s[i]] == 1)
+            return i; 
+    }
+    return -1;
+}
+
+// To execute C++, please define "int main()"
+int main() {
+  string test0 = "";
+  string test1 = "testtest";
+  string test2 = "ilovesoccer";
+  string test3 = "i love soccer";
+  cout << FirstUniqChar(test0) << endl;
+  cout << "The test 0 result should be -1 as it is a empty string"<< endl;
+  cout << FirstUniqChar(test1) << std::endl;
+  cout << "The test 1 result should be -1 as there is no uniq char"<< endl;
+  cout << FirstUniqChar(test2) << std::endl;
+  cout << "The test 2 result should be 0 and the first uniq char is i"<< endl;
+  cout << FirstUniqChar(test3) << std::endl;
+  cout << "The test 3 result should be 0 and the first uniq char is i"<< endl;
+  
+  return 0;
+}
