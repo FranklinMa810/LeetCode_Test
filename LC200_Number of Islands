@@ -8,7 +8,8 @@ public:
         int ans = 0;
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++){
-                ans += (int)grid[y][x] - 48; // adjust char to int: (int)'1' is 49, (int)'0' is 48
+                ans += grid[y][x] - '0'; 
+				// ans += static_cast<int>(grid[y][x]) - 48adjust char to int: (int)'1' is 49, (int)'0' is 48
                 dfs(grid, y, x, height, width);
             }
         return ans;

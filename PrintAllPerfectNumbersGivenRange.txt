@@ -1,0 +1,13 @@
+#include <iostream>
+#include <cmath>    // ceil, sqrt
+
+void PerfectSquares(const float& l, const float& r) {
+	int num = ceil(sqrt(l));
+	int n = num * num;	// find first number
+	int delta = 2 * num + 1;
+	while ((n >= l && n <= r)) {
+		std::cout << n << " ";
+		n += delta;
+		delta += 2;
+	}
+}
