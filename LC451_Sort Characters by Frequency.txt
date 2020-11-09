@@ -1,0 +1,11 @@
+class Solution {
+//hashmap and sort, time complexity:O(N) + O(N)
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> char_cnt;
+        for (char c : s)
+            ++char_cnt[c];
+        sort(s.begin(), s.end(), [&char_cnt](const char& a, const char& b){return char_cnt[a] > char_cnt[b] || (char_cnt[a] == char_cnt[b] && a > b);});
+        return s;
+    }
+};
