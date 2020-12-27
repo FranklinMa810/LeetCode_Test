@@ -12,3 +12,4 @@ void PerfectSquares(const float& l, const float& r) {
 	}
 }
 
+
