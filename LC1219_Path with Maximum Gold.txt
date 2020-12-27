@@ -1,0 +1,20 @@
+class Solution{
+public:
+    int getMaximumGold(vector<vector<int>>& g){
+		if (g.empty())
+			return 0;
+		int ans = 0;
+		for (int i = 0; i < g.size(); ++i)
+			for (int j = 0; j < g[0].size(); ++j)
+				ans = max(ans,dfs(j, i, g));
+	}
+	int dfs(int x, int y, vector<vector<int>>& g){
+		if(x < 0 || x >= g[0].size() || y < 0 || y >= g.size() || g[y][x] == 0)
+			return 0;
+		int temp = 0;
+		temp = g[y][x];
+		int r = temp + max({dfs(x+1, y, g), dfs(x-1, y, g), dfs(x, y+1, g), dfs(x, y-1, g)});
+		g[y][x] = temp;
+		return r;
+	}
+};
